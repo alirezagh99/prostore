@@ -12,6 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { UserButton } from "./user-button";
 
 const Menu = () => {
   return (
@@ -24,11 +25,7 @@ const Menu = () => {
           </Link>
         </Button>
 
-        <Button>
-          <Link href="/sign-in" className="flex items-center gap-2">
-            <UserIcon /> Sign In
-          </Link>
-        </Button>
+        <UserButton />
       </nav>
       <nav className={"md:hidden"}>
         <Sheet>
@@ -43,11 +40,7 @@ const Menu = () => {
                 <ShoppingCart /> Cart
               </Link>
             </Button>{" "}
-            <Button>
-              <Link href="/sign-in" className="flex items-center gap-2">
-                <UserIcon /> Sign In
-              </Link>
-            </Button>
+            <UserButton />
             <SheetDescription>
               This is a simple sheet description.
             </SheetDescription>

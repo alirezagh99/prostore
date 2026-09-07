@@ -11,7 +11,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth/next";
 import SignUpForm from "./sign-up-form";
 
 export const metadata: Metadata = {
@@ -23,7 +22,7 @@ const SignUpPage = async (props: {
 }) => {
   const { callbackUrl } = await props.searchParams;
 
-  const session = await getServerSession();
+  const session = await auth();
 
   if (session) {
     return redirect(callbackUrl || "/");

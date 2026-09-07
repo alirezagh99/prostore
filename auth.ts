@@ -2,8 +2,8 @@ import NextAuth, { type DefaultSession } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/db/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { compareSync } from "bcrypt-ts-edge";
-import { jwt } from "zod";
+import { compare, compareSync } from "bcrypt-ts-edge";
+import { cookies } from "next/headers";
 
 export const config = {
   pages: {
@@ -33,7 +33,10 @@ export const config = {
 
         // check if user exists and password is correct
         if (user && user.password) {
-          const isMatch = compareSync(credentials.password, user.password);
+          const isMatch = await compareSync(
+            credentials.password as string,
+            user.password,
+          );
           if (isMatch) {
             return {
               id: user.id,
@@ -64,6 +67,7 @@ export const config = {
     async jwt({ token, user, session, trigger }: any) {
       // Assign user fields to token
       if (user) {
+        token.id = user.id;
         token.role = user.role;
 
         // if user has no name then use the email
@@ -76,10 +80,58 @@ export const config = {
             data: { name: token.name },
           });
         }
+
+        if (trigger === "signIn" || trigger === "signUp") {
+          const cookiesObject = await cookies();
+          const sessionCartId = cookiesObject.get("sessionCartId")?.value;
+
+          if (sessionCartId) {
+            const sessionCart = await prisma.cart.findFirst({
+              where: { sessionCartId },
+            });
+
+            if (sessionCart) {
+              // Delete current user cart
+              await prisma.cart.deleteMany({
+                where: { userId: user.id },
+              });
+
+              // Assign new cart
+              await prisma.cart.update({
+                where: { id: sessionCart.id },
+                data: { userId: user.id },
+              });
+            }
+          }
+        }
       }
 
       return token;
     },
+    // authorized({ request, auth }: any) {
+    //   // check for session cart cookie
+    //   if (!request.cookies.get("sessionCartId")) {
+    //     // generate new session cart id cookie
+    //     const sessionCartId = crypto.randomUUID();
+
+    //     // clone the req headers
+    //     const newRequestHeaders = new Headers(request.headers);
+
+    //     // create new response and add the new headers
+    //     const response = NextResponse.next({
+    //       request: {
+    //         headers: newRequestHeaders,
+    //       },
+    //     });
+
+    //     // sent newly generated sessionCartId in the response cookies
+    //     response.cookies.set("sessionCartId", sessionCartId);
+
+    //     return response;
+    //   } else {
+    //     return true;
+    //   }
+    // },
   },
 };
 

@@ -6,13 +6,14 @@ import { LATEST_PRODUCTS_LIMIT } from "@/lib/constants";
 export default async function HomePage() {
   const latestProducts = await getLatestProducts();
 
+  console.log("latestProducts: ", latestProducts);
   return (
     <>
-      <ProductList
+      {/* <ProductList
         title="Newest Arrival"
         data={latestProducts}
         limit={LATEST_PRODUCTS_LIMIT}
-      />
+      /> */}
     </>
   );
 }

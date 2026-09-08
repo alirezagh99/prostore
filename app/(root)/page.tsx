@@ -9,11 +9,11 @@ export default async function HomePage() {
   console.log("latestProducts: ", latestProducts);
   return (
     <>
-      {/* <ProductList
+      <ProductList
         title="Newest Arrival"
         data={latestProducts}
         limit={LATEST_PRODUCTS_LIMIT}
-      /> */}
+      />
     </>
   );
 }

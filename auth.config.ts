@@ -33,6 +33,7 @@ export const authConfig = {
           },
         });
 
+        console.log("sessionCartId:", sessionCartId);
         // Set newly generated sessionCartId in the response cookies
         response.cookies.set("sessionCartId", sessionCartId);
 

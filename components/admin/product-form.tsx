@@ -35,18 +35,13 @@ const ProductForm = ({
 }) => {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof insertProductSchema>>({
-    resolver:
-      type === "Update"
-        ? zodResolver(updateProductSchema)
-        : zodResolver(insertProductSchema),
+  const form = useForm<z.input<typeof insertProductSchema>>({
+    resolver: zodResolver(insertProductSchema),
     defaultValues:
       product && type === "Update" ? product : productDefaultValues,
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
-    values,
-  ) => {
+  const onSubmit = async (values: z.infer<typeof insertProductSchema>) => {
     if (type === "Create") {
       const res = await createProduct(values);
 
@@ -67,7 +62,7 @@ const ProductForm = ({
         return;
       }
 
-      const res = await updateProduct({ ...values, id: productId });
+      const res = await updateProduct(values, productId);
 
       if (!res.success) {
         toast.add({
@@ -89,7 +84,7 @@ const ProductForm = ({
 
   return (
     <form
-      method="POST"
+      // method="POST"
       onSubmit={form.handleSubmit(onSubmit)}
       className="space-y-8"
     >
@@ -234,6 +229,8 @@ const ProductForm = ({
                   id="form-rhf-demo-stock"
                   aria-invalid={fieldState.invalid}
                   autoComplete="off"
+                  type="number"
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

@@ -150,8 +150,8 @@ const ReviewForm = ({
                   <FieldLabel htmlFor="form-rhf-rating">Rating</FieldLabel>
                   <Select
                     name={field.name}
-                    value={field.value}
-                    onValueChange={field.onChange}
+                    value={String(field.value)}
+                    onValueChange={(value) => field.onChange(Number(value))}
                   >
                     <SelectTrigger
                       id="form-rhf-select-rating"

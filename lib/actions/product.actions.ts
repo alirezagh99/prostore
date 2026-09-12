@@ -156,20 +156,23 @@ export async function createProduct(data: z.infer<typeof insertProductSchema>) {
 }
 
 // update a products
-export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
+export async function updateProduct(
+  data: z.infer<typeof updateProductSchema>,
+  productId: string,
+) {
   try {
     const product = updateProductSchema.parse(data);
 
     const productExists = await prisma.product.findFirst({
       where: {
-        id: product.id,
+        id: productId,
       },
     });
 
     if (!productExists) throw new Error("Product not found");
 
     await prisma.product.update({
-      where: { id: product.id },
+      where: { id: productId },
       data: product,
     });
 

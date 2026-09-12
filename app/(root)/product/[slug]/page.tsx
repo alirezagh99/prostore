@@ -1,6 +1,7 @@
 import AddToCart from "@/components/shared/product/add-to-cart";
 import ProductImages from "@/components/shared/product/product-images";
 import ProductPrice from "@/components/shared/product/product-price";
+import Rating from "@/components/shared/product/rating";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -35,9 +36,8 @@ export default async function ProductDetailsPage({
                 {product.brand} {product.category}
               </p>
               <h1 className={"h3-bold"}>{product.name}</h1>
-              <p>
-                {product.rating} of {product.numReviews} reviews
-              </p>
+              <Rating value={Number(product.rating)} />
+              <p>{product.numReviews} reviews</p>
               <div
                 className={"flex flex-col sm:flex-row sm:items-center gap-3"}
               >

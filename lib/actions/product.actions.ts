@@ -197,9 +197,7 @@ export async function getAllCategories() {
 // get featured products
 export async function getFeaturedProducts() {
   const data = await prisma.product.findMany({
-    where: {
-      isFeatured: true,
-    },
+    where: { isFeatured: true },
     orderBy: { createdAt: "desc" },
     take: 4,
   });

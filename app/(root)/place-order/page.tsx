@@ -139,3 +139,5 @@ const PlaceOrderPage = async () => {
     </>
   );
 };
+
+export default PlaceOrderPage;

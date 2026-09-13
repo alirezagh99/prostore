@@ -28,6 +28,7 @@ import {
   updateOrderToPaidCOD,
 } from "@/lib/actions/order.actions";
 import { toast } from "@/components/ui/toast";
+import StripePayment from "./stripe-payment";
 
 const PrintLoadingState = () => {
   const [{ isPending, isRejected }] = usePayPalScriptReducer();
@@ -91,10 +92,12 @@ const OrderDetailsTable = ({
   order,
   isAdmin,
   paypalClientId,
+  stripeClientSecret,
 }: {
   order: Order;
   isAdmin: boolean;
   paypalClientId: string;
+  stripeClientSecret: string | null;
 }) => {
   const {
     id,
@@ -243,6 +246,13 @@ const OrderDetailsTable = ({
               )}
 
               {/* Stripe Payment */}
+              {!isPaid && paymentMethod === "Stripe" && stripeClientSecret && (
+                <StripePayment
+                  priceInCents={Number(order.totalPrice) * 100}
+                  orderId={order.id}
+                  clientSecret={stripeClientSecret}
+                />
+              )}
 
               {/* Cash On Delivery */}
               {isAdmin && !isPaid && paymentMethod === "CashOnDelivery" && (

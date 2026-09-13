@@ -43,6 +43,7 @@ export async function signInWithCredentials(
 
 // Sign user out
 export async function signOutUser() {
+  console.log("signing out");
   await signOut();
 }
 

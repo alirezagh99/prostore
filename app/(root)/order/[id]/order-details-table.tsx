@@ -43,7 +43,11 @@ const PrintLoadingState = () => {
 };
 
 // Button to mark order as paid
-const MarkAsPaidButton = ({ order }: { order: Order }) => {
+const MarkAsPaidButton = ({
+  order,
+}: {
+  order: Omit<Order, "paymentResult">;
+}) => {
   const [isPending, startTransition] = useTransition();
 
   return (
@@ -66,7 +70,11 @@ const MarkAsPaidButton = ({ order }: { order: Order }) => {
 };
 
 // Button to mark order as delivered
-const MarkAsDeliveredButton = ({ order }: { order: Order }) => {
+const MarkAsDeliveredButton = ({
+  order,
+}: {
+  order: Omit<Order, "paymentResult">;
+}) => {
   const [isPending, startTransition] = useTransition();
 
   return (
@@ -94,7 +102,7 @@ const OrderDetailsTable = ({
   paypalClientId,
   stripeClientSecret,
 }: {
-  order: Order;
+  order: Omit<Order, "paymentResult">;
   isAdmin: boolean;
   paypalClientId: string;
   stripeClientSecret: string | null;

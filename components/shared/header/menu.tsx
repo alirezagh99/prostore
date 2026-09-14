@@ -13,6 +13,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { UserButton } from "./user-button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "cn";
 
 const Menu = () => {
   return (
@@ -35,11 +37,17 @@ const Menu = () => {
           <SheetContent className={"flex flex-col items-start p-4x"}>
             <SheetTitle>Menu</SheetTitle>
             <ModeToggle />
-            <Button variant="ghost">
-              <Link href="/cart" className="flex items-center gap-2">
-                <ShoppingCart /> Cart
-              </Link>
-            </Button>{" "}
+            {/* <Button variant="ghost"> */}
+            <Link
+              href="/cart"
+              className={cn(
+                "flex items-center gap-2",
+                buttonVariants({ variant: "ghost" }),
+              )}
+            >
+              <ShoppingCart /> Cart
+            </Link>
+            {/* </Button>{" "} */}
             <UserButton />
             <SheetDescription>
               This is a simple sheet description.

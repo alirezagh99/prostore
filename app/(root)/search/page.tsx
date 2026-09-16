@@ -5,6 +5,7 @@ import {
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import ProductCard from "@/components/shared/product/product-card";
+import Pagination from "@/components/shared/Pagination";
 
 export async function generateMetadata(props: {
   searchParams: Promise<{
@@ -242,6 +243,12 @@ const SearchPage = async (props: {
           ))}
         </div>
       </div>
+      {products.totalPages > 1 && (
+        <Pagination
+          page={Number(page) || 1}
+          totalPages={products?.totalPages}
+        />
+      )}
     </div>
   );
 };

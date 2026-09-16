@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/field";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { toast } from "@/components/ui/toast";
+import { updateUserPaymentMethod } from "@/lib/actions/user.actions";
 import { DEFAULT_PAYMENT_METHOD, PAYMENT_METHODS } from "@/lib/constants";
 import { paymentMethodSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,7 +36,21 @@ const PaymentMethodForm = ({
 
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = async () => {};
+  const onSubmit = async (values: z.infer<typeof paymentMethodSchema>) => {
+    startTransition(async () => {
+      const res = await updateUserPaymentMethod(values);
+
+      if (!res.success) {
+        toast.add({
+          type: "destructive",
+          description: res.message,
+        });
+        return;
+      }
+
+      router.push("/place-order");
+    });
+  };
 
   return (
     <div className="max-w-md mx-auto space-y-4">
@@ -43,7 +59,11 @@ const PaymentMethodForm = ({
         Please select a payment method
       </p>
 
-      <form id="form-rhf" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        id="form-rhf"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4"
+      >
         <div className="flex flex-col md:flex-row gap-5">
           <FieldGroup>
             <Controller

@@ -1,6 +1,6 @@
 import DeleteDialog from "@/components/shared/delete-dialog";
 import Pagination from "@/components/shared/Pagination";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -31,17 +31,21 @@ const AdminProductsPage = async (props: {
           {searchText && (
             <div>
               Filtered by <i>&quot;{searchText}&quot;</i>{" "}
-              <Link href="/admin/products">
-                <Button variant="outline" size="sm">
-                  Remove Filter
-                </Button>
+              <Link
+                href="/admin/products"
+                className={buttonVariants({ variant: "outline" })}
+              >
+                Remove Filter
               </Link>
             </div>
           )}
         </div>
-        <Button variant="default">
-          <Link href="/admin/products/create">Create Product</Link>
-        </Button>
+        <Link
+          href="/admin/products/create"
+          className={buttonVariants({ variant: "default" })}
+        >
+          Create Product
+        </Link>
       </div>
 
       <Table>
@@ -68,9 +72,12 @@ const AdminProductsPage = async (props: {
               <TableCell>{product.stock}</TableCell>
               <TableCell>{product.rating}</TableCell>
               <TableCell className="flex gap-1">
-                <Button variant="outline" size="sm">
-                  <Link href={`/admin/products/${product.id}`}>Edit</Link>
-                </Button>
+                <Link
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                  href={`/admin/products/${product.id}`}
+                >
+                  Edit
+                </Link>
                 <DeleteDialog id={product.id} action={deleteProduct} />
               </TableCell>
             </TableRow>

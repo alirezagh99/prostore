@@ -205,8 +205,8 @@ export async function getAllUsers({
       ...queryFilter,
     },
     orderBy: { createdAt: "desc" },
-    skip: limit,
-    take: (page - 1) * limit,
+    take: limit,
+    skip: (page - 1) * limit,
   });
 
   const dataCount = await prisma.user.count();

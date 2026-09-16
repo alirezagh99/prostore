@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatId } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import Pagination from "@/components/shared/Pagination";
 import { Badge } from "@/components/ui/badge";
@@ -36,10 +36,11 @@ const AdminUsersPage = async (props: {
         {searchText && (
           <div>
             Filtered by <i>&quot;{searchText}&quot;</i>{" "}
-            <Link href="/admin/users">
-              <Button variant="outline" size="sm">
-                Remove Filter
-              </Button>
+            <Link
+              href="/admin/users"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              Remove Filter
             </Link>
           </div>
         )}
@@ -69,9 +70,15 @@ const AdminUsersPage = async (props: {
                   )}
                 </TableCell>
                 <TableCell>
-                  <Button variant="outline" size="sm">
-                    <Link href={`/admin/users/${user.id}`}>Edit</Link>
-                  </Button>
+                  <Link
+                    className={buttonVariants({
+                      variant: "outline",
+                      size: "sm",
+                    })}
+                    href={`/admin/users/${user.id}`}
+                  >
+                    Edit
+                  </Link>
                   <DeleteDialog id={user.id} action={deleteUser} />
                 </TableCell>
               </TableRow>

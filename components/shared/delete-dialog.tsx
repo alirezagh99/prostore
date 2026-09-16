@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useTransition } from "react";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -13,6 +13,7 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { toast } from "../ui/toast";
+import { cn } from "cn";
 
 const DeleteDialog = ({
   id,
@@ -44,10 +45,13 @@ const DeleteDialog = ({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger>
-        <Button size="sm" variant="destructive" className="ml-2">
-          Delete
-        </Button>
+      <AlertDialogTrigger
+        className={cn(
+          "ml-2",
+          buttonVariants({ variant: "destructive", size: "sm" }),
+        )}
+      >
+        Delete
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

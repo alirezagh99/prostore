@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldError,
@@ -11,6 +12,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { DEFAULT_PAYMENT_METHOD, PAYMENT_METHODS } from "@/lib/constants";
 import { paymentMethodSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRight, Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -82,6 +84,16 @@ const PaymentMethodForm = ({
               )}
             />
           </FieldGroup>
+        </div>
+        <div className="flex gap-2">
+          <Button type="submit" disabled={isPending}>
+            {isPending ? (
+              <Loader className="w-4 h-4 animate-spin" />
+            ) : (
+              <ArrowRight className="w-4 h-4" />
+            )}{" "}
+            Continue
+          </Button>
         </div>
       </form>
     </div>

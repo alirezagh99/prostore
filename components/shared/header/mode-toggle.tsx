@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "cn";
 import { MoonIcon, SunIcon, SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -32,7 +33,7 @@ const ModeToggle = () => {
         render={
           <Button
             variant="ghost"
-            className="focus-visible:ring-0 focus-visible:ring-offset-0"
+            className={cn("focus-visible:ring-0 focus-visible:ring-offset-0")}
           >
             {theme === "system" ? (
               <SunMoon />

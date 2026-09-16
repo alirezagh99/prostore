@@ -242,13 +242,13 @@ const SearchPage = async (props: {
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
+        {products.totalPages > 1 && (
+          <Pagination
+            page={Number(page) || 1}
+            totalPages={products?.totalPages}
+          />
+        )}
       </div>
-      {products.totalPages > 1 && (
-        <Pagination
-          page={Number(page) || 1}
-          totalPages={products?.totalPages}
-        />
-      )}
     </div>
   );
 };

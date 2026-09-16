@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOutUser } from "@/lib/actions/user.actions";
+import { cn } from "cn";
 import { UserIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -17,11 +18,12 @@ export const UserButton = async () => {
 
   if (!session) {
     return (
-      <Button>
-        <Link href={"/sign-in"}>
-          <UserIcon /> Sign In
-        </Link>
-      </Button>
+      <Link
+        href={"/sign-in"}
+        className={buttonVariants({ variant: "default" })}
+      >
+        <UserIcon /> Sign In
+      </Link>
     );
   }
 
@@ -32,14 +34,14 @@ export const UserButton = async () => {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <div className="flex items-center">
-            <Button
-              variant={"ghost"}
-              className={
-                "relative w-8 h-8 rounded-full ml-2 flex items-center justify-center bg-gray-200"
-              }
+            <div
+              className={cn(
+                "relative w-8 h-8 rounded-full ml-2 flex items-center justify-center bg-gray-200",
+                buttonVariants({ variant: "ghost" }),
+              )}
             >
               {firstInitial}
-            </Button>
+            </div>
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className={"w-56"} align="end">

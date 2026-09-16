@@ -21,11 +21,15 @@ const Menu = () => {
     <div className={"flex justify-end gap-3"}>
       <nav className={"hidden md:flex w-full max-w-xs gap-1"}>
         <ModeToggle />
-        <Button variant="ghost">
-          <Link href="/cart" className="flex items-center gap-2">
-            <ShoppingCart /> Cart
-          </Link>
-        </Button>
+        <Link
+          href="/cart"
+          className={cn(
+            "flex items-center gap-2",
+            buttonVariants({ variant: "ghost" }),
+          )}
+        >
+          <ShoppingCart /> Cart
+        </Link>
 
         <UserButton />
       </nav>
@@ -37,7 +41,6 @@ const Menu = () => {
           <SheetContent className={"flex flex-col items-start p-4x"}>
             <SheetTitle>Menu</SheetTitle>
             <ModeToggle />
-            {/* <Button variant="ghost"> */}
             <Link
               href="/cart"
               className={cn(
@@ -47,7 +50,6 @@ const Menu = () => {
             >
               <ShoppingCart /> Cart
             </Link>
-            {/* </Button>{" "} */}
             <UserButton />
             <SheetDescription>
               This is a simple sheet description.

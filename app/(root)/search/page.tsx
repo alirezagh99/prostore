@@ -3,7 +3,8 @@ import {
   getAllCategories,
 } from "@/lib/actions/product.actions";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import ProductCard from "@/components/shared/product/product-card";
 
 export async function generateMetadata(props: {
   searchParams: Promise<{
@@ -140,18 +141,16 @@ const SearchPage = async (props: {
                 Any
               </Link>
             </li>
-            {categories.map((item) => {
-              return (
-                <li key={item.category}>
-                  <Link
-                    className={`${category === item.category && "font-bold"}`}
-                    href={getFilterUrl({ c: item.category })}
-                  >
-                    {item.category}
-                  </Link>
-                </li>
-              );
-            })}
+            {categories.map((x) => (
+              <li key={x.category}>
+                <Link
+                  className={`${category === x.category && "font-bold"}`}
+                  href={getFilterUrl({ c: x.category })}
+                >
+                  {x.category}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
         {/* Price Links */}
@@ -204,31 +203,42 @@ const SearchPage = async (props: {
         </div>
       </div>
       <div className="md:col-span-4 space-y-4">
-        <div className="flex items-center">
-          {q !== "all" && q !== "" && "Query: " + q}
-          {category !== "all" && category !== "" && "Category: " + category}
-          {price !== "all" && " Price: " + price}
-          {rating !== "all" && " Rating: " + rating + " stars & up"}
-          &nbsp;
-          {(q !== "all" && q !== "") ||
-          (category !== "all" && category !== "") ||
-          rating !== "all" ||
-          price !== "all" ? (
-            <Button variant={"link"}>
-              <Link href="/search">Clear</Link>
-            </Button>
-          ) : null}
+        <div className="flex-between flex-col md:flex-row my-4">
+          <div className="flex items-center">
+            {q !== "all" && q !== "" && "Query: " + q}
+            {category !== "all" && category !== "" && "Category: " + category}
+            {price !== "all" && " Price: " + price}
+            {rating !== "all" && " Rating: " + rating + " stars & up"}
+            &nbsp;
+            {(q !== "all" && q !== "") ||
+            (category !== "all" && category !== "") ||
+            rating !== "all" ||
+            price !== "all" ? (
+              <Link
+                href="/search"
+                className={buttonVariants({ variant: "link" })}
+              >
+                Clear
+              </Link>
+            ) : null}
+          </div>
+          <div>
+            Sort by{" "}
+            {sortOrders.map((s) => (
+              <Link
+                key={s}
+                className={`mx-2 ${sort == s && "font-bold"}`}
+                href={getFilterUrl({ s })}
+              >
+                {s}
+              </Link>
+            ))}
+          </div>
         </div>
-        <div>
-          Sort by{" "}
-          {sortOrders.map((s) => (
-            <Link
-              key={s}
-              className={`mx-2 ${sort == s && "font-bold"}`}
-              href={getFilterUrl({ s })}
-            >
-              {s}
-            </Link>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {products.data.length === 0 && <div>No products found</div>}
+          {products.data.map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>

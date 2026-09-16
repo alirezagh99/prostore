@@ -102,6 +102,7 @@ const StripeForm = ({
         <LinkAuthenticationElement onChange={(e) => setEmail(e.value.email)} />
       </div>
       <Button
+        type="submit"
         className="w-full"
         size="lg"
         disabled={stripe == null || elements == null || isLoading}

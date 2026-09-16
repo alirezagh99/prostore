@@ -9,7 +9,7 @@ import { createOrder } from "@/lib/actions/order.actions";
 const PlaceOrderButton = () => {
   const { pending } = useFormStatus();
   return (
-    <Button disabled={pending} className="w-full">
+    <Button type="submit" disabled={pending} className="w-full">
       {pending ? (
         <Loader className="w-4 h-4 animate-spin" />
       ) : (
